@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuManager"
+        android:title="勤怠入力"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuGame"
+        android:title="ゲーム"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuManual"
+        android:title="マニュアル"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menuTime"
+        android:title="管理者用"
+        app:showAsAction="never"/>
+</menu>

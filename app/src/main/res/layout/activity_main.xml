@@ -2,17 +2,235 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/BONBON"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:addStatesFromChildren="false"
+    android:scrollIndicators="right"
+    android:scrollbarStyle="outsideInset"
+    android:scrollbarTrackHorizontal="@drawable/ticket_yellow_512"
     tools:context=".MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/textTitle"
+        android:layout_width="220dp"
+        android:layout_height="15dp"
+
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="48dp"
+        android:fontFamily="@font/kosugimaruregular"
+        android:gravity="center_horizontal"
+        android:text="勤怠管理用アプリ"
+        android:textAlignment="center"
+        android:textColor="#957060"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textTitle2" />
+
+    <TextView
+        android:id="@+id/textTitle3"
+        android:layout_width="220dp"
+        android:layout_height="42dp"
+
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="23dp"
+        android:fontFamily="@font/kosugimaruregular"
+        android:gravity="center_horizontal"
+        android:letterSpacing="0.2"
+        android:lineSpacingExtra="8sp"
+        android:text="BONBON"
+        android:textAlignment="center"
+        android:textColor="#C63C466E"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textTitle2"
+        android:layout_width="220dp"
+        android:layout_height="42dp"
+
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/kosugimaruregular"
+        android:gravity="center_horizontal"
+        android:letterSpacing="0.2"
+        android:lineSpacingExtra="8sp"
+        android:text="BONBON"
+        android:textAlignment="center"
+        android:textColor="#17181C"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textMenu0"
+        android:layout_width="107dp"
+        android:layout_height="22dp"
+
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="90dp"
+        android:fontFamily="@font/kosugimaruregular"
+        android:gravity="center_horizontal"
+        android:text="TOPメニュー"
+        android:textAlignment="viewStart"
+        android:textColor="#181E39"
+        android:textColorLink="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textMenu1"
+        android:layout_width="96dp"
+        android:layout_height="25dp"
+
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="455dp"
+        android:fontFamily="@font/kosugimaruregular"
+        android:gravity="center_horizontal"
+        android:text="勤怠入力"
+        android:textAlignment="textStart"
+        android:textColor="#85878E"
+        android:textColorLink="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textMenu2"
+        android:layout_width="82dp"
+        android:layout_height="21dp"
+
+        android:layout_marginStart="235dp"
+        android:layout_marginTop="455dp"
+        android:fontFamily="@font/kosugimaruregular"
+        android:gravity="center_horizontal"
+        android:text="ゲーム"
+        android:textAlignment="textStart"
+        android:textColor="#85878E"
+        android:textColorLink="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textMenu3"
+        android:layout_width="120dp"
+        android:layout_height="29dp"
+
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="575dp"
+        android:fontFamily="@font/kosugimaruregular"
+        android:gravity="center_horizontal"
+        android:text="マニュアル"
+        android:textAlignment="textStart"
+        android:textColor="#85878E"
+        android:textColorLink="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textMenu4"
+        android:layout_width="104dp"
+        android:layout_height="29dp"
+
+        android:layout_marginStart="235dp"
+        android:layout_marginTop="575dp"
+        android:fontFamily="@font/kosugimaruregular"
+        android:gravity="center_horizontal"
+        android:text="管理者用"
+        android:textAlignment="textStart"
+        android:textColor="#85878E"
+        android:textColorLink="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="90dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/draw_3" />
+
+    <ImageView
+        android:id="@+id/applyIcon"
+        android:layout_width="416dp"
+        android:layout_height="227dp"
+        android:layout_marginTop="115dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bonbon" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="235dp"
+        android:layout_marginTop="360dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ios___2_"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="360dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:backgroundTint="#FFFFFF"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ios___1_"
+        tools:ignore="MissingConstraints"
+        />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="480dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ios___3_"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="235dp"
+        android:layout_marginTop="480dp"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ios___5_"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

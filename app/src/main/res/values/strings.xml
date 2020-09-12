@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">PT</string>
+    <string name="app_name">BONBON</string>
+    <string name="time_title">勤怠入力</string>
+    <string name="manager_title">管理者用</string>
+    <string name="game_title">ゲーム</string>
+    <string name="manual_title">マニュアル</string>
+    <string name="top_menu">TOPメニュー</string>
+    <string name="app_second_name">勤怠管理用アプリ</string>
 </resources>

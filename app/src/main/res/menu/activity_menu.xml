@@ -3,19 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menuManager"
-        android:title="勤怠入力"
+        android:id="@+id/menuTime"
+        android:title="@string/time_title"
         app:showAsAction="never"/>
     <item
         android:id="@+id/menuGame"
-        android:title="ゲーム"
+        android:title="@string/game_title"
         app:showAsAction="never"/>
     <item
         android:id="@+id/menuManual"
-        android:title="マニュアル"
+        android:title="@string/manual_title"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/menuTime"
-        android:title="管理者用"
+        android:id="@+id/menuManager"
+        android:title="@string/manager_title"
         app:showAsAction="never"/>
 </menu>

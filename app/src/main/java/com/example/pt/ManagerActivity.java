@@ -10,7 +10,7 @@ public class ManagerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_manager);
         mp = MediaPlayer.create(this, R.raw.bgm_5);
         mp.setLooping(true);//BGMのループ
         mp.start();//BGMの再生

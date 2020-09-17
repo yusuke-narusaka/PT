@@ -6,4 +6,12 @@
     <string name="manual_title">マニュアル</string>
     <string name="top_menu">TOPメニュー</string>
     <string name="app_second_name">勤怠管理用アプリ</string>
+    <string name="shakeText">スマホを縦に振っておみくじを選ぼう！</string>
+    <string name="result_daikichi">すっごくいい日でしょう</string>
+    <string name="result_chukichi">かなりいい日でしょう</string>
+    <string name="result_shokichi">けっこういい日でしょう</string>
+    <string name="result_kichi">まあまあいい日でしょう</string>
+    <string name="result_suekichi">がんばればいい日でしょう</string>
+    <string name="result_kyo">いろいろ気を付けましょう</string>
+    <string name="result_swipe">上にスライドさせて結果を確認しよう！</string>
 </resources>

@@ -20,7 +20,7 @@ public class GameActivity extends AppCompatActivity {
         mp.start();//BGMの再生
 
         //イメージボタンに設定したid属性から、おみくじを引くのイメージボタンの情報を取得する
-        ImageButton buttonStart = (ImageButton) findViewById(R.id.buttonStart);
+        ImageButton buttonStart = findViewById(R.id.buttonStart);
 
         //おみくじを引くのイメージボタンの情報とボタンがクリックされたときの処理を関連付ける
         buttonStart.setOnClickListener(new View.OnClickListener() {

@@ -3,8 +3,10 @@ package com.example.pt;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,12 +17,37 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     //BGM再生用の変数宣言
     private MediaPlayer mp;
+    //ユーザー名を保存するSharedPreferencesを使うための変数宣言
+    private SharedPreferences dataStore;
 
-    //アプリ起動時に最初に実行（画面下部アイコンをクリックしたら各アクティビティに移動＋BGM再生）
+
+
+
+    //アプリ起動時に最初に実行される処理
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        //1回だけ表示される入力画面のチェック用（コメント解除して動かすと必ず入力画面が表示される）
+        //カーソルが切り替えたい行にある状態でCtrl + / （ショートカットキー）を押すと、コメント解除・設定の切り替えが簡単にできる
+//        Intent intentS = new Intent(getApplication(), InputActivity.class);
+//        startActivity(intentS);
+
+        //デバイス・ファイル・エクスプローラーのdata/data/com.example.pt/shared_prefs/DataStore.xml内に保管されている名前を取得するためにインスタンス化
+        dataStore = getSharedPreferences("DataStore", MODE_PRIVATE);
+        //input KeyのValueを取得（値が無ければブランク（""）を返す）し、String型の変数strに代入する
+        String str = dataStore.getString("input", "");
+        //変数ｓｔｒに名前が代入されていない（＝ブランク）の場合は、名前入力画面（InputActivity）を表示する
+        if(str.equals("")) {
+            Intent intent = new Intent(getApplication(), InputActivity.class);
+            startActivity(intent);
+        }
+
+        TextView textView = findViewById(R.id.nameText);
+        textView.setText(str + "さん");
 
         //勤怠入力（猫アイコン）をクリックしたとき
         ImageButton catButton = findViewById(R.id.catButton);

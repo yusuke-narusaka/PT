@@ -11,10 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GameActivityResult"></activity>
+
+        <activity android:name=".GameActivityResult" />
         <activity android:name=".GameActivitySwipe" />
         <activity android:name=".GameActivityShake" />
         <activity android:name=".ManagerActivity" />
+        <activity android:name=".ManagerSubActivity" />
         <activity android:name=".ManualActivity" />
         <activity android:name=".TimeActivity" />
         <activity android:name=".GameActivity" />

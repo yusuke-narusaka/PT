@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.webkit.WebView;
 
 public class ManualActivity extends AppCompatActivity {
     private MediaPlayer mp;
@@ -11,6 +12,8 @@ public class ManualActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual);
+        WebView webView = (WebView)findViewById(R.id.webView);
+        webView.loadUrl("file:///android_asset/2/index.html");
         mp = MediaPlayer.create(this, R.raw.bgm_5);
         mp.setLooping(true);//BGMのループ
         mp.start();//BGMの再生

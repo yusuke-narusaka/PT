@@ -10,7 +10,9 @@ import android.widget.EditText;
 
 public class InputActivity extends AppCompatActivity {
     private SharedPreferences dataStore;
-    private EditText editText;
+    private SharedPreferences employeeNumber;
+    private EditText editTextName;
+    private EditText editTextNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +21,10 @@ public class InputActivity extends AppCompatActivity {
 
         // "DataStore"という名前でインスタンスを生成
         dataStore = getSharedPreferences("DataStore", MODE_PRIVATE);
+        employeeNumber = getSharedPreferences("EmployeeNumber", MODE_PRIVATE);
 
-        editText = findViewById(R.id.userName);
+        editTextName = findViewById(R.id.userName);
+        editTextNumber = findViewById(R.id.employeeNumber);
 
         //ユーザー登録ボタンを押したときの処理
         Button buttonWrite = findViewById(R.id.userRegistButton);
@@ -28,11 +32,15 @@ public class InputActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // エディットテキストのテキストを取得
-                String text = editText.getText().toString();
+                String textName = editTextName.getText().toString();
+                String textNumber = editTextNumber.getText().toString();
                 // 入力文字列を"input"に書き込む
-                SharedPreferences.Editor editor = dataStore.edit();
-                editor.putString("input", text);
-                editor.commit();
+                SharedPreferences.Editor editorName = dataStore.edit();
+                SharedPreferences.Editor editorNumber = employeeNumber.edit();
+                editorName.putString("inputName", textName);
+                editorNumber.putString("inputNumber", textNumber);
+                editorName.commit();
+                editorNumber.commit();
                 finish();
             }
         });

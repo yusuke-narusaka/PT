@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     //BGM再生用の変数宣言
     private MediaPlayer mp;
     //ユーザー名を保存するSharedPreferencesを使うための変数宣言
+    private SharedPreferences employeeNumber;
     private SharedPreferences dataStore;
 
 
@@ -37,17 +38,19 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(intentS);
 
         //デバイス・ファイル・エクスプローラーのdata/data/com.example.pt/shared_prefs/DataStore.xml内に保管されている名前を取得するためにインスタンス化
+        employeeNumber = getSharedPreferences("EmployeeNumber", MODE_PRIVATE);
         dataStore = getSharedPreferences("DataStore", MODE_PRIVATE);
         //input KeyのValueを取得（値が無ければブランク（""）を返す）し、String型の変数strに代入する
-        String str = dataStore.getString("input", "");
+        String employeeNumberString = employeeNumber.getString("inputNumber", "");
+        String userName = dataStore.getString("inputName", "名無し");
         //変数ｓｔｒに名前が代入されていない（＝ブランク）の場合は、名前入力画面（InputActivity）を表示する
-        if(str.equals("")) {
+        if(employeeNumberString.equals("")) {
             Intent intent = new Intent(getApplication(), InputActivity.class);
             startActivity(intent);
         }
 
         TextView textView = findViewById(R.id.nameText);
-        textView.setText(str + "さん");
+        textView.setText(userName + "さん");
 
         //勤怠入力（猫アイコン）をクリックしたとき
         ImageButton catButton = findViewById(R.id.catButton);

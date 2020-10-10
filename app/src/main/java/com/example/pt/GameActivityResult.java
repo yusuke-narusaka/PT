@@ -49,7 +49,7 @@ public class GameActivityResult extends AppCompatActivity {
         String gamePoint = setBackGroundView();
 
         SharedPreferences data = getSharedPreferences("DataStore", Context.MODE_PRIVATE);
-        final String storeName = data.getString("input",null );
+        final String storeName = data.getString("inputName",null );
 
         String filename = storeName + "_data.csv";
         String output = gamePoint + "\n";

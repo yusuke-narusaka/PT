@@ -39,7 +39,7 @@ public class TimeActivity extends AppCompatActivity {
         mp.start();//BGMの再生
 
         SharedPreferences data = getSharedPreferences("DataStore", Context.MODE_PRIVATE);
-        final String storeName = data.getString("input",null );
+        final String storeName = data.getString("inputName",null );
 
         // クリックイベントを取得したいボタン
         Button startButton = findViewById(R.id.start_button);
@@ -72,7 +72,7 @@ public class TimeActivity extends AppCompatActivity {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference();
 
-                Uri file = Uri.fromFile(new File("data/data/com.example.pt/files/" + storeName + "_data.csv"));
+                Uri file = Uri.fromFile(new File("data/data/com.example./files/" + storeName + "_data.csv"));
                 StorageReference riversRef = storageRef.child("CsvFiles/" + file.getLastPathSegment());
                 UploadTask uploadTask = riversRef.putFile(file);
 

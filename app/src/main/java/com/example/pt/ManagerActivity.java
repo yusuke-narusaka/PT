@@ -1,7 +1,5 @@
 package com.example.pt;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -9,6 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ManagerActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private MediaPlayer mp;
@@ -49,6 +49,7 @@ public class ManagerActivity extends AppCompatActivity implements AdapterView.On
 
         // クリックリスナーをセット
         listView.setOnItemClickListener(this);
+        
     }
 
     @Override

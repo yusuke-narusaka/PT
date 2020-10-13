@@ -1,21 +1,17 @@
 package com.example.pt;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.Time;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -38,8 +34,8 @@ public class TimeActivity extends AppCompatActivity {
         mp.setLooping(true);//BGMのループ
         mp.start();//BGMの再生
 
-        SharedPreferences data = getSharedPreferences("DataStore", Context.MODE_PRIVATE);
-        final String storeName = data.getString("inputName",null );
+        SharedPreferences data = getSharedPreferences("EmployeeNumber", Context.MODE_PRIVATE);
+        final String employeeNumber = data.getString("inputNumber",null );
 
         // クリックイベントを取得したいボタン
         Button startButton = findViewById(R.id.start_button);
@@ -57,8 +53,8 @@ public class TimeActivity extends AppCompatActivity {
                 String nowTime = time.hour + ":" + time.minute;
 
                 //CSV書き出し処理
-                String filename = storeName + "_data.csv";
-                String output = date + "," + storeName + "," + nowTime + ",";
+                String filename = employeeNumber + "_data.csv";
+                String output = date + "," + employeeNumber + "," + nowTime + ",";
                 FileOutputStream outputStream;
                 try {
                     outputStream = openFileOutput(filename, Context.MODE_APPEND);
@@ -72,7 +68,7 @@ public class TimeActivity extends AppCompatActivity {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference();
 
-                Uri file = Uri.fromFile(new File("data/data/com.example./files/" + storeName + "_data.csv"));
+                Uri file = Uri.fromFile(new File("data/data/com.example./files/" + employeeNumber + "_data.csv"));
                 StorageReference riversRef = storageRef.child("CsvFiles/" + file.getLastPathSegment());
                 UploadTask uploadTask = riversRef.putFile(file);
 
@@ -90,7 +86,7 @@ public class TimeActivity extends AppCompatActivity {
                 String nowTime = time.hour + ":" + time.minute;
 
                 //CSV書き出し処理
-                String filename = storeName + "_data.csv";
+                String filename = employeeNumber + ".csv";
                 String output = nowTime + ",";
                 FileOutputStream outputStream;
                 try {
@@ -105,7 +101,7 @@ public class TimeActivity extends AppCompatActivity {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference();
 
-                Uri file = Uri.fromFile(new File("data/data/com.example.pt/files/" + storeName + "_data.csv"));
+                Uri file = Uri.fromFile(new File("data/data/com.example.pt/files/" + employeeNumber + ".csv"));
                 StorageReference riversRef = storageRef.child("CsvFiles/"+file.getLastPathSegment());
                 UploadTask uploadTask = riversRef.putFile(file);
             }

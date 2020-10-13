@@ -10,7 +10,6 @@ import android.widget.EditText;
 
 public class InputActivity extends AppCompatActivity {
     private SharedPreferences dataStore;
-    private SharedPreferences employeeNumber;
     private EditText editTextName;
     private EditText editTextNumber;
 
@@ -20,8 +19,7 @@ public class InputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_input);
 
         // "DataStore"という名前でインスタンスを生成
-        dataStore = getSharedPreferences("DataStore", MODE_PRIVATE);
-        employeeNumber = getSharedPreferences("EmployeeNumber", MODE_PRIVATE);
+        dataStore = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
 
         editTextName = findViewById(R.id.userName);
         editTextNumber = findViewById(R.id.employeeNumber);
@@ -36,9 +34,9 @@ public class InputActivity extends AppCompatActivity {
                 String textNumber = editTextNumber.getText().toString();
                 // 入力文字列を"input"に書き込む
                 SharedPreferences.Editor editorName = dataStore.edit();
-                SharedPreferences.Editor editorNumber = employeeNumber.edit();
-                editorName.putString("inputName", textName);
-                editorNumber.putString("inputNumber", textNumber);
+                SharedPreferences.Editor editorNumber = dataStore.edit();
+                editorName.putString(Constants.KEY_NAME, textName);
+                editorNumber.putString(Constants.KEY_EMPLOYEE_NUMBER, textNumber);
                 editorName.commit();
                 editorNumber.commit();
                 finish();

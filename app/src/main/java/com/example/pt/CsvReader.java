@@ -1,8 +1,9 @@
 package com.example.pt;
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.net.Uri;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,15 +15,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,66 +26,65 @@ public class CsvReader extends AppCompatActivity {
     List<ListData> objects = new ArrayList<ListData>();
     String fileName = null;
     FirebaseStorage storage = FirebaseStorage.getInstance();
-    Context context;
+    File cacheFile;
 
     public void reader(Context context, String selectedText) {
 
-        AssetManager assetManager = context.getResources().getAssets();
         try {
 
             if (selectedText.equals("福地家宏")){
-                fileName = "data_fukuchi.csv";
+                fileName = "16008.csv";
             } else if (selectedText.equals("石神国子")){
-                fileName = "data_ishigami.csv";
+                fileName = "20009.csv";
             } else if (selectedText.equals("松井貴博")){
-                fileName = "data_matsui.csv";
+                fileName = "35418.csv";
             } else if (selectedText.equals("表もこみち")){
-                fileName = "data_omote.csv";
+                fileName = "11247.csv";
             } else if (selectedText.equals("椎名裕美子")){
-                fileName = "data_shiina.csv";
+                fileName = "33984.csv";
             } else if (selectedText.equals("杉本高文")){
-                fileName = "data_sugimoto.csv";
+                fileName = "24242.csv";
             } else if (selectedText.equals("菅生大将")){
-                fileName = "data_sugou.csv";
+                fileName = "17426.csv";
             } else if (selectedText.equals("駿河学")){
-                fileName = "data_suruga.csv";
+                fileName = "43012.csv";
             } else if (selectedText.equals("竹村桐子")){
-                fileName = "data_takemura.csv";
+                fileName = "34715.csv";
             } else if (selectedText.equals("寺西修")){
-                fileName = "data_teranishi.csv";
+                fileName = "22987.csv";
             } else if (selectedText.equals("ダウンロード")){
                 this.fileDownloader();
             }
 
             // CSVファイルの読み込み
-            //String relativePath = "data_fukuchi" + "*.csv";
-            //String filesDirectoryPath = context.getFilesDir().getPath();
-            //String absolutePath = context.getCacheDir().getPath() + "/" + relativePath;
-            //FileInputStream fs = new FileInputStream(absolutePath);
-            //InputStreamReader inputStreamReader = new InputStreamReader(fs);
-            InputStream inputStream = assetManager.open(String.valueOf(fileName));
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferReader = new BufferedReader(inputStreamReader);
-            String line;
-            while ((line = bufferReader.readLine()) != null) {
+            if (!selectedText.equals("ダウンロード")){
+                String fileName = "data_fukuchi7100720432012683646.csv";
+                cacheFile = new File(context.getCacheDir(),fileName);
+                FileReader filereader = new FileReader(cacheFile);
+                BufferedReader bufferReader = new BufferedReader(filereader);
 
-                //カンマ区切りで１つづつ配列に入れる
-                ListData data = new ListData();
-                String[] RowData = line.split(",");
+                String line;
+                while ((line = bufferReader.readLine()) != null) {
 
-                //CSVの左([0]番目)から順番にセット
-                data.setDate(RowData[0]);
-                data.setName(RowData[1]);
-                data.setStarttime(RowData[2]);
-                data.setClosingtime(RowData[3]);
-                data.setGetpoint(RowData[4]);
+                    //カンマ区切りで１つづつ配列に入れる
+                    ListData data = new ListData();
+                    String[] RowData = line.split(",");
 
-                objects.add(data);
+                    //CSVの左([0]番目)から順番にセット
+                    data.setDate(RowData[0]);
+                    data.setName(RowData[1]);
+                    data.setStarttime(RowData[2]);
+                    data.setClosingtime(RowData[3]);
+                    data.setGetpoint(RowData[4]);
+
+                    objects.add(data);
+                }
             }
-            bufferReader.close();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public void fileDownloader() {
@@ -97,14 +92,22 @@ public class CsvReader extends AppCompatActivity {
         //ダウンロード処理
         StorageReference storageRef = storage.getReference();
         StorageReference islandRef;
-        islandRef = storageRef.child("CsvFiles/sutou kuniyuki_data.csv");
+        islandRef = storageRef.child("CsvFiles/data_fukuchi.csv");
+        FileOutputStream outputStream = null;
+        try {
+            outputStream = openFileOutput("data_fukuchi.csv", Context.MODE_PRIVATE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         File localFile = null;
+
         try {
-            localFile = File.createTempFile("sutou kuniyuki", ".csv");
+            localFile = File.createTempFile("data_fukuchi", ".csv");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         islandRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override

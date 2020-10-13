@@ -12,7 +12,7 @@ public class ManualActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual);
-        WebView webView = (WebView)findViewById(R.id.webView);
+        WebView webView = findViewById(R.id.webView);
         webView.loadUrl("file:///android_asset/2/index.html");
         mp = MediaPlayer.create(this, R.raw.bgm_5);
         mp.setLooping(true);//BGMのループ

@@ -1,9 +1,6 @@
 package com.example.pt;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,7 +55,7 @@ public class CsvReader extends AppCompatActivity {
 
             // CSVファイルの読み込み
             if (!selectedText.equals("ダウンロード")){
-                String fileName = "data_fukuchi7100720432012683646.csv";
+                String fileName = "data_fukuchi".concat("*").concat(".csv");
                 cacheFile = new File(context.getCacheDir(),fileName);
                 FileReader filereader = new FileReader(cacheFile);
                 BufferedReader bufferReader = new BufferedReader(filereader);
@@ -113,6 +110,7 @@ public class CsvReader extends AppCompatActivity {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 // Local temp file has been created
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -120,6 +118,8 @@ public class CsvReader extends AppCompatActivity {
                 // Handle any errors
             }
         });
+
+
     }
 
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,12 +35,13 @@ public class TimeActivity extends AppCompatActivity {
         mp.setLooping(true);//BGMのループ
         mp.start();//BGMの再生
 
-        SharedPreferences data = getSharedPreferences("EmployeeNumber", Context.MODE_PRIVATE);
-        final String employeeNumber = data.getString("inputNumber",null );
+        SharedPreferences dataStore = getSharedPreferences(Constants.SETTING_NAME, Context.MODE_PRIVATE);
+        final String employeeNumber = dataStore.getString(Constants.KEY_EMPLOYEE_NUMBER,null );
 
         // クリックイベントを取得したいボタン
         Button startButton = findViewById(R.id.start_button);
         Button closeButton = findViewById(R.id.close_button);
+        Button changeNameButton = findViewById(R.id.changename_button);
 
 // ボタンに OnClickListener インターフェースを実装する
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +55,7 @@ public class TimeActivity extends AppCompatActivity {
                 String nowTime = time.hour + ":" + time.minute;
 
                 //CSV書き出し処理
-                String filename = employeeNumber + "_data.csv";
+                String filename = employeeNumber + ".csv";
                 String output = date + "," + employeeNumber + "," + nowTime + ",";
                 FileOutputStream outputStream;
                 try {
@@ -68,7 +70,7 @@ public class TimeActivity extends AppCompatActivity {
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 StorageReference storageRef = storage.getReference();
 
-                Uri file = Uri.fromFile(new File("data/data/com.example./files/" + employeeNumber + "_data.csv"));
+                Uri file = Uri.fromFile(new File("data/data/com.example./files/" + employeeNumber + ".csv"));
                 StorageReference riversRef = storageRef.child("CsvFiles/" + file.getLastPathSegment());
                 UploadTask uploadTask = riversRef.putFile(file);
 
@@ -108,7 +110,23 @@ public class TimeActivity extends AppCompatActivity {
 
         });
 
+        changeNameButton.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View view) {
+
+                SharedPreferences dataStore = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
+                editText = (EditText)findViewById(R.id.userName);
+                String textName = editText.getText().toString();
+                SharedPreferences.Editor editorName = dataStore.edit();
+                editorName.putString(Constants.KEY_NAME, textName);
+                editorName.commit();
+                Context context = getApplicationContext();
+                Toast.makeText(context, "ユーザー名が変更されました", Toast.LENGTH_LONG).show();
+                finish();
+            }
+
+        });
 
     }
 

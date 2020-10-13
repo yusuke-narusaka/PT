@@ -1,12 +1,9 @@
 package com.example.pt;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,12 +11,14 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
     //BGM再生用の変数宣言
     private MediaPlayer mp;
     //ユーザー名を保存するSharedPreferencesを使うための変数宣言
-    private SharedPreferences userName;
     private SharedPreferences employeeNumber;
+    private SharedPreferences userName;
 
     //アプリ起動時に最初に実行される処理
     @Override
@@ -27,17 +26,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         //1回だけ表示される入力画面のチェック用（コメント解除して動かすと必ず入力画面が表示される）
         //カーソルが切り替えたい行にある状態でCtrl + / （ショートカットキー）を押すと、コメント解除・設定の切り替えが簡単にできる
 //        Intent intentS = new Intent(getApplication(), InputActivity.class);
 //        startActivity(intentS);
 
-        //デバイス・ファイル・エクスプローラーのdata/data/com.example.pt/shared_prefs/DataStore.xml内に保管されている名前を取得するためにインスタンス化
-        employeeNumber = getSharedPreferences(Constants.KEY_EMPLOYEE_NUMBER, MODE_PRIVATE);
+        //デバイス・ファイル・エクスプローラーのdata/data/com.example.pt/shared_prefs/DataStore.xml内に保管されている名前を取得するメソッド
+        employeeNumber = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
         userName = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
-        //input KeyのValueを取得（値が無ければブランク（""）を返す）し、String型の変数strに代入する
+        //input KeyのValueを取得（値が無ければブランク（""）を返す）し、String型の変数employeeNumberStringに代入する
         String employeeNumberString = employeeNumber.getString(Constants.KEY_EMPLOYEE_NUMBER, "");
         String userNameString = userName.getString(Constants.KEY_NAME, "名無し");
         //変数ｓｔｒに名前が代入されていない（＝ブランク）の場合は、名前入力画面（InputActivity）を表示する
@@ -133,6 +130,20 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         mp.start();//BGMの再生
+        employeeNumber = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
+        userName = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
+        //input KeyのValueを取得（値が無ければブランク（""）を返す）し、String型の変数employeeNumberStringに代入する
+        String employeeNumberString = employeeNumber.getString(Constants.KEY_EMPLOYEE_NUMBER, "");
+        String userNameString = userName.getString(Constants.KEY_NAME, "名無し");
+        //変数ｓｔｒに名前が代入されていない（＝ブランク）の場合は、名前入力画面（InputActivity）を表示する
+        if(employeeNumberString.equals("")) {
+            Intent intent = new Intent(getApplication(), InputActivity.class);
+            startActivity(intent);
+        }
+
+        TextView textView = findViewById(R.id.nameText);
+        textView.setText(userNameString + "さん");
+
     }
 
     // 画面が非表示に実行

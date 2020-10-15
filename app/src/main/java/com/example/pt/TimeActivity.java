@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class TimeActivity extends AppCompatActivity {
     private MediaPlayer mp;
-    Context context;
     private TextView textView;
     private EditText editText;
 
@@ -43,6 +42,8 @@ public class TimeActivity extends AppCompatActivity {
                 //始業時間をSharedPreferencesに保存する
                 CsvController csvCtrl = new CsvController();
                 csvCtrl.saveStartTime(getApplicationContext());
+                Context context = getApplicationContext();
+                Toast.makeText(context, "今日も元気に頑張っていきましょう！！", Toast.LENGTH_LONG).show();
             }
 
         });
@@ -61,6 +62,8 @@ public class TimeActivity extends AppCompatActivity {
 
                 //firebaseにファイル保存
                 csvCtrl.uploadFile(getApplicationContext());
+                Context context = getApplicationContext();
+                Toast.makeText(context, "本日もお仕事お疲れさまでした！！", Toast.LENGTH_LONG).show();
             }
 
         });

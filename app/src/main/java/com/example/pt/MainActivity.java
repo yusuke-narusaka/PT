@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
     //BGM再生用の変数宣言
     private MediaPlayer mp;
     //ユーザー名を保存するSharedPreferencesを使うための変数宣言
-    private SharedPreferences employeeNumber;
-    private SharedPreferences userName;
+    private SharedPreferences dataStore;
 
     //アプリ起動時に最初に実行される処理
     @Override
@@ -32,11 +31,10 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(intentS);
 
         //デバイス・ファイル・エクスプローラーのdata/data/com.example.pt/shared_prefs/DataStore.xml内に保管されている名前を取得するメソッド
-        employeeNumber = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
-        userName = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
+        dataStore = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
         //input KeyのValueを取得（値が無ければブランク（""）を返す）し、String型の変数employeeNumberStringに代入する
-        String employeeNumberString = employeeNumber.getString(Constants.KEY_EMPLOYEE_NUMBER, "");
-        String userNameString = userName.getString(Constants.KEY_NAME, "名無し");
+        String employeeNumberString = dataStore.getString(Constants.KEY_EMPLOYEE_NUMBER, "");
+        String userNameString = dataStore.getString(Constants.KEY_NAME, "名無し");
         //変数ｓｔｒに名前が代入されていない（＝ブランク）の場合は、名前入力画面（InputActivity）を表示する
         if(employeeNumberString.equals("")) {
             Intent intent = new Intent(getApplication(), InputActivity.class);
@@ -114,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         managerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), ManagerActivity.class);
+                Intent intent = new Intent(getApplication(), PasswordActivity.class);
                 startActivity(intent);
             }
         });
@@ -130,17 +128,9 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         mp.start();//BGMの再生
-        employeeNumber = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
-        userName = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
+        dataStore = getSharedPreferences(Constants.SETTING_NAME, MODE_PRIVATE);
         //input KeyのValueを取得（値が無ければブランク（""）を返す）し、String型の変数employeeNumberStringに代入する
-        String employeeNumberString = employeeNumber.getString(Constants.KEY_EMPLOYEE_NUMBER, "");
-        String userNameString = userName.getString(Constants.KEY_NAME, "名無し");
-        //変数ｓｔｒに名前が代入されていない（＝ブランク）の場合は、名前入力画面（InputActivity）を表示する
-        if(employeeNumberString.equals("")) {
-            Intent intent = new Intent(getApplication(), InputActivity.class);
-            startActivity(intent);
-        }
-
+        String userNameString = dataStore.getString(Constants.KEY_NAME, "名無し");
         TextView textView = findViewById(R.id.nameText);
         textView.setText(userNameString + "さん");
 
@@ -177,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
         switch (itemId) {
             //勤怠入力を押したとき
             case R.id.menuManager:
-                Intent managerIntent = new Intent(getApplication(), ManagerActivity.class);
+                Intent managerIntent = new Intent(getApplication(), PasswordActivity.class);
                 startActivity(managerIntent);
                 return true;
             //ゲームを押したとき

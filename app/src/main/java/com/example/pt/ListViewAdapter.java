@@ -13,9 +13,9 @@ public class ListViewAdapter extends BaseAdapter {
         TextView textView;
     }
 
-    private LayoutInflater inflater;
-    private int itemLayoutId;
-    private String[] titles;
+    private final LayoutInflater inflater;
+    private final int itemLayoutId;
+    private final String[] titles;
 
     ListViewAdapter(Context context, int itemLayoutId,
                     String[] scenes) {

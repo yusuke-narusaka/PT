@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 public class ListViewAdapter2 extends ArrayAdapter<com.example.pt.ListData> {
-    private LayoutInflater layoutInflater;
+    private final LayoutInflater layoutInflater;
 
     public ListViewAdapter2(Context context, int resource, List<com.example.pt.ListData> objects) {
         super(context, resource, objects);

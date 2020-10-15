@@ -2,12 +2,9 @@ package com.example.pt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,12 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.Random;
 
 public class GameActivityResult extends AppCompatActivity {
@@ -48,27 +39,10 @@ public class GameActivityResult extends AppCompatActivity {
         //ランダムな背景画像を設定
         String gamePoint = setBackGroundView();
 
-        SharedPreferences data = getSharedPreferences("DataStore", Context.MODE_PRIVATE);
-        final String storeName = data.getString("inputName",null );
+        //獲得ポイントをSharedPreferencesに保存
+        CsvController csvCtrl = new CsvController();
+        csvCtrl.savePoint(getApplicationContext(), gamePoint);
 
-        String filename = storeName + "_data.csv";
-        String output = gamePoint + "\n";
-        FileOutputStream outputStream;
-        try {
-            outputStream = openFileOutput(filename, Context.MODE_APPEND);
-            outputStream.write(output.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //CSVアップロード処理
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
-
-        Uri file = Uri.fromFile(new File("data/data/com.example.pt/files/" + storeName + "_data.csv"));
-        StorageReference riversRef = storageRef.child("CsvFiles/"+file.getLastPathSegment());
-        UploadTask uploadTask = riversRef.putFile(file);
         //イメージボタンに設定したid属性から、もう一度のイメージボタンの情報を取得する
         ImageButton buttonRetry = findViewById(R.id.buttonRetry);
 

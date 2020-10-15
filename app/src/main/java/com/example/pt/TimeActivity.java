@@ -3,9 +3,7 @@ package com.example.pt;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,13 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.File;
-import java.io.FileOutputStream;
 
 public class TimeActivity extends AppCompatActivity {
     private MediaPlayer mp;
@@ -43,69 +34,33 @@ public class TimeActivity extends AppCompatActivity {
         Button closeButton = findViewById(R.id.close_button);
         Button changeNameButton = findViewById(R.id.changename_button);
 
-// ボタンに OnClickListener インターフェースを実装する
+        //「始業」ボタンが押されたとき
         startButton.setOnClickListener(new View.OnClickListener() {
 
             // クリック時に呼ばれるメソッド
             @Override
             public void onClick(View view) {
-                Time time = new Time("Asia/Tokyo");
-                time.setToNow();
-                String date = time.year + "/" + (time.month+1) + "/" + time.monthDay;
-                String nowTime = time.hour + ":" + time.minute;
-
-                //CSV書き出し処理
-                String filename = employeeNumber + ".csv";
-                String output = date + "," + employeeNumber + "," + nowTime + ",";
-                FileOutputStream outputStream;
-                try {
-                    outputStream = openFileOutput(filename, Context.MODE_APPEND);
-                    outputStream.write(output.getBytes());
-                    outputStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                //CSVアップロード処理
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference();
-
-                Uri file = Uri.fromFile(new File("data/data/com.example./files/" + employeeNumber + ".csv"));
-                StorageReference riversRef = storageRef.child("CsvFiles/" + file.getLastPathSegment());
-                UploadTask uploadTask = riversRef.putFile(file);
-
+                //始業時間をSharedPreferencesに保存する
+                CsvController csvCtrl = new CsvController();
+                csvCtrl.saveStartTime(getApplicationContext());
             }
 
         });
 
+        //「終業」ボタンが押されたとき
         closeButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                Time time = new Time("Asia/Tokyo");
-                time.setToNow();
-                String date = time.year + "/" + (time.month+1) + "/" + time.monthDay;
-                String nowTime = time.hour + ":" + time.minute;
+                //終業時間をSharedPreferencesに保存する
+                CsvController csvCtrl = new CsvController();
+                csvCtrl.saveEndTime(getApplicationContext());
 
-                //CSV書き出し処理
-                String filename = employeeNumber + ".csv";
-                String output = nowTime + ",";
-                FileOutputStream outputStream;
-                try {
-                    outputStream = openFileOutput(filename, Context.MODE_APPEND);
-                    outputStream.write(output.getBytes());
-                    outputStream.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                //CSVファイルに書き出し
+                csvCtrl.saveFile(getApplicationContext());
 
-                //CSVアップロード処理
-                FirebaseStorage storage = FirebaseStorage.getInstance();
-                StorageReference storageRef = storage.getReference();
-
-                Uri file = Uri.fromFile(new File("data/data/com.example.pt/files/" + employeeNumber + ".csv"));
-                StorageReference riversRef = storageRef.child("CsvFiles/"+file.getLastPathSegment());
-                UploadTask uploadTask = riversRef.putFile(file);
+                //firebaseにファイル保存
+                csvCtrl.uploadFile(getApplicationContext());
             }
 
         });

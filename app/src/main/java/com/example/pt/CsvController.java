@@ -122,7 +122,7 @@ public class CsvController {
 
         //firebaseのStorageにファイルをアップロード
         Uri file = Uri.fromFile(new File(context.getFilesDir().getPath() + "/" + fileName));
-        StorageReference riversRef = storageRef.child(Constants.FIREBASE_FILE_PATH + file.getLastPathSegment());
+        StorageReference riversRef = storageRef.child(Constants.FIREBASE_FILE_PATH + "/" +file.getLastPathSegment());
         UploadTask uploadTask = riversRef.putFile(file);
     }
 }

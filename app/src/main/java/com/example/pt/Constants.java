@@ -18,4 +18,9 @@ public class Constants {
     /** ゲームの獲得ポイント */
     public static final String KEY_GAME_POINT = "gamePoint";
 
+    /** Firebase Storage */
+    /** Firebase Storage内のファイルを保存するフォルダ */
+    public static final String FIREBASE_FILE_PATH = "CsvFiles";
+    /** Firebase Storageからダウンロードしたファイルを保存するフォルダ */
+    public static final String DOWNLOAD_PATH = "Download";
 }

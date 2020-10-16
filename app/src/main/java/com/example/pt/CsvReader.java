@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.BufferedReader;
@@ -50,7 +51,7 @@ public class CsvReader extends AppCompatActivity {
             } else if (selectedText.equals("寺西修")){
                 fileName = "22987.csv";
             } else if (selectedText.equals("ダウンロード")){
-                this.fileDownloader();
+                this.fileDownloader(context);
             }
 
             // CSVファイルの読み込み
@@ -84,42 +85,37 @@ public class CsvReader extends AppCompatActivity {
 
     }
 
-    public void fileDownloader() {
+    /** FirebaseからCSVファイルをダウンロードする関数 */
+    private void fileDownloader(Context context) {
+        // Firebaseを使うための参照を作成
+        StorageReference listRef = storage.getReference().child(Constants.FIREBASE_FILE_PATH);
 
-        //ダウンロード処理
-        StorageReference storageRef = storage.getReference();
-        StorageReference islandRef;
-        islandRef = storageRef.child("CsvFiles/data_fukuchi.csv");
-        FileOutputStream outputStream = null;
-        try {
-            outputStream = openFileOutput("data_fukuchi.csv", Context.MODE_PRIVATE);
-        } catch (Exception e) {
-            e.printStackTrace();
+        // ダウンロードしたファイルは内部ストレージに保存する
+        final String filePath = context.getFilesDir().getPath();
+        File downloadDir = new File(filePath, Constants.DOWNLOAD_PATH);
+        if (!downloadDir.exists()) { // フォルダがなければ作成する
+            downloadDir.mkdir();
         }
 
-        File localFile = null;
-
-        try {
-            localFile = File.createTempFile("data_fukuchi", ".csv");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        islandRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                // Local temp file has been created
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-
-
+        // すべてのファイルのリストを取得する
+        listRef.listAll()
+                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                    @Override
+                    public void onSuccess(ListResult listResult) {
+                        for (StorageReference item : listResult.getItems()) {
+                            // ダウンロード先を内部ストレージに指定
+                            File localFile = new File(
+                                    filePath + "/" + Constants.DOWNLOAD_PATH, item.getName());
+                            // ファイルをダウンロード
+                            item.getFile(localFile);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // エラー処理を書く
+                    }
+                });
     }
-
 }

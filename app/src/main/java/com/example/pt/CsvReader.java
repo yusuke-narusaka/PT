@@ -14,9 +14,12 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +55,7 @@ public class CsvReader extends AppCompatActivity {
                 fileName = "22987.csv";
             } else if (selectedText.equals("ダウンロード")){
                 this.fileDownloader(context);
+                this.createNameList(context);
             }
 
             // CSVファイルの読み込み
@@ -117,5 +121,59 @@ public class CsvReader extends AppCompatActivity {
                         // エラー処理を書く
                     }
                 });
+    }
+
+    /** ダウンロードしたファイル一覧から名前のリストを作成する関数 */
+    private ArrayList<ArrayList<String>> createNameList(Context context) {
+        ArrayList<ArrayList<String>> arrayLists = new ArrayList<ArrayList<String>>();
+
+        // フィルタを作成する
+        FilenameFilter filter = new FilenameFilter(){
+            public boolean accept(File file, String str){
+                // 指定文字列でフィルタする
+                if(str.indexOf(".csv") != -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+        // ファイル一覧を取得する
+        File downloadDir = new File(context.getFilesDir().getPath(), Constants.DOWNLOAD_PATH);
+        File[] list = downloadDir.listFiles();
+
+        // 1ファイルずつ読み込む
+        if (list != null) {
+            for (int i = 0; i < list.length; i++) {
+                if (list[i].isFile()) { // ファイルの場合
+                    String userName = null;
+                    try {
+                        // CSVファイル読み込みの準備
+                        InputStream inputStream = new FileInputStream(list[i]);
+                        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                        String lineBuffer;
+
+                        // CSVファイル読み込み
+                        while ((lineBuffer = bufferedReader.readLine()) != null) {
+                            // カンマ区切りで1つずつ配列に入れる
+                            String[] rowData = lineBuffer.split(",");
+                            // 名前を取得する
+                            userName = rowData[1];
+                        }
+                        bufferedReader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    // 名前とファイル名をセットにする
+                    ArrayList<String> dataList = new ArrayList<String>();
+                    dataList.add(userName);
+                    dataList.add(list[i].toString());
+
+                    arrayLists.add(dataList);
+                }
+            }
+        }
+        return arrayLists;
     }
 }

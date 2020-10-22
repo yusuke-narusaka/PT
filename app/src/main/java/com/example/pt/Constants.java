@@ -23,4 +23,8 @@ public class Constants {
     public static final String FIREBASE_FILE_PATH = "CsvFiles";
     /** Firebase Storageからダウンロードしたファイルを保存するフォルダ */
     public static final String DOWNLOAD_PATH = "Download";
+
+    /** 管理者用画面 */
+    /** CSVファイル表示画面を呼び出すときのIntentのExtra名 */
+    public static final String INTENT_EXTRA_PATH = "filepath";
 }

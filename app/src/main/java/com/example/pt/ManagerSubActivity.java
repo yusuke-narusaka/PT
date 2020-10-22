@@ -19,12 +19,13 @@ public class ManagerSubActivity extends AppCompatActivity {
         mp.setLooping(true);//BGMのループ
         mp.start();//BGMの再生
 
+        // 受け取ったIntentを取得
         Intent intent = getIntent();
-        String selectedText = intent.getStringExtra("Text");
+        String filePath = intent.getStringExtra(Constants.INTENT_EXTRA_PATH);
 
         LinearLayout mainLayout = findViewById(R.id.list_item);
         com.example.pt.CsvReader parser = new com.example.pt.CsvReader();
-        parser.reader(getApplicationContext(),selectedText);
+        parser.reader(getApplicationContext(), filePath);
         ListViewAdapter2 listViewAdapter2 = new ListViewAdapter2(this, R.layout.list_item, parser.objects);
         ListView listView = findViewById(R.id.list);
         listView.setAdapter(listViewAdapter2);

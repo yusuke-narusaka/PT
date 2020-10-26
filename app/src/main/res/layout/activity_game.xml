@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/backgroundGamestart"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_start1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,11 +18,11 @@
         android:id="@+id/buttonStart"
         android:layout_width="282dp"
         android:layout_height="70dp"
-        android:layout_marginTop="504dp"
+        android:layout_marginBottom="138dp"
         android:backgroundTint="#00FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/backgroundGamestart"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/backgroundGamestart"
         app:srcCompat="@drawable/button_start" />
 </androidx.constraintlayout.widget.ConstraintLayout>

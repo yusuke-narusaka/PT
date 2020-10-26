@@ -10,11 +10,10 @@
         android:id="@+id/checkView"
         android:layout_width="269dp"
         android:layout_height="204dp"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="380dp"
+        android:layout_marginTop="400dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/check" />
 
@@ -38,7 +37,7 @@
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/go_result" />

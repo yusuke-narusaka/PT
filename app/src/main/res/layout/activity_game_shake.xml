@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="447dp"
         android:layout_marginStart="1dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,9 +46,9 @@
         android:textColor="#000000"
         android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/background_shake"
-        app:layout_constraintHorizontal_bias="0.617"
-        app:layout_constraintStart_toEndOf="@+id/background_shake"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

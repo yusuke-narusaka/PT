@@ -5,7 +5,7 @@
     android:id="@+id/mainActivityFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center|center_horizontal"
+    android:layout_gravity="clip_horizontal|center|center_horizontal"
     android:addStatesFromChildren="false"
     android:scrollIndicators="right"
     android:scrollbarStyle="outsideInset"
@@ -102,7 +102,7 @@
 
     <ImageView
         android:id="@+id/applyIcon"
-        android:layout_width="409dp"
+        android:layout_width="0dp"
         android:layout_height="234dp"
         android:layout_marginTop="115dp"
         android:scaleType="centerCrop"
@@ -112,7 +112,7 @@
         app:srcCompat="@drawable/bonbon" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fitsSystemWindows="false"
@@ -130,7 +130,7 @@
 
         <LinearLayout
             android:id="@+id/UpperButtonLayout"
-            android:layout_width="410dp"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:gravity="center|center_horizontal"
             tools:ignore="DuplicateIds">
@@ -175,7 +175,7 @@
 
         <LinearLayout
             android:id="@+id/UpperTextLayout"
-            android:layout_width="410dp"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="bottom|center_horizontal"
             android:orientation="horizontal">
@@ -231,7 +231,7 @@
 
         <LinearLayout
             android:id="@+id/LowerButtonLayout"
-            android:layout_width="410dp"
+            android:layout_width="match_parent"
             android:layout_height="90dp"
             android:gravity="center|center_horizontal">
 
@@ -274,7 +274,7 @@
 
         <LinearLayout
             android:id="@+id/LowerTextLayout"
-            android:layout_width="409dp"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="bottom|center_horizontal"
             android:orientation="horizontal">
@@ -286,7 +286,7 @@
 
             <TextView
                 android:id="@+id/manualText"
-                android:layout_width="92dp"
+                android:layout_width="95dp"
                 android:layout_height="25dp"
 
                 android:fontFamily="@font/kosugimaruregular"

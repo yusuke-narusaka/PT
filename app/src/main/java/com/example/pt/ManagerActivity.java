@@ -14,8 +14,11 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
@@ -91,6 +94,8 @@ public class ManagerActivity extends AppCompatActivity {
     public class FileDownloadThread extends AsyncTask<Void, Void, ArrayList<ArrayList<String>>> {
         public ProgressDialog target;
         private Context context;
+        /** ダウンロード完了したファイルをカウントする変数 */
+        private int count = 0;
 
         public FileDownloadThread(Context context) {
             this.context = context;
@@ -102,9 +107,11 @@ public class ManagerActivity extends AppCompatActivity {
             // Firebaseからファイルをダウンロード
             fileDownloader(context);
 
+            // ファイルダウンロードが完了するまでスレッドを停止
+            waitFileDownload();
+
             // ダウンロードしたファイルから名前&ファイルパスリストを作成
-            ArrayList<ArrayList<String>> arrayLists = new ArrayList<ArrayList<String>>();
-            arrayLists = createNameList(context);
+            ArrayList<ArrayList<String>> arrayLists = createNameList(context);
 
             return arrayLists;
         }
@@ -116,12 +123,11 @@ public class ManagerActivity extends AppCompatActivity {
             if (target != null) {
                 target.dismiss();
             }
-
             // 名前リストを生成
             setNameList(arrayLists);
 
-             // ListViewのインスタンスを生成
-             ListView listView = findViewById(R.id.list_view);
+            // ListViewのインスタンスを生成
+            ListView listView = findViewById(R.id.list_view);
 
             // BaseAdapter を継承したadapterのインスタンスを生成
             // レイアウトファイル list.xml を activity_manager.xml に
@@ -164,13 +170,33 @@ public class ManagerActivity extends AppCompatActivity {
             listRef.listAll()
                     .addOnSuccessListener(new OnSuccessListener<ListResult>() {
                         @Override
-                        public void onSuccess(ListResult listResult) {
+                        public void onSuccess(final ListResult listResult) {
                             for (StorageReference item : listResult.getItems()) {
                                 // ダウンロード先を内部ストレージに指定
                                 File localFile = new File(
                                         filePath + "/" + Constants.DOWNLOAD_PATH, item.getName());
+
                                 // ファイルをダウンロード
-                                item.getFile(localFile);
+                                FileDownloadTask downloadTask = item.getFile(localFile);
+                                downloadTask.addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                                    // ファイルダウンロードが完了したら実行される
+                                    @Override
+                                    public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            count++;
+                                            if (count == listResult.getItems().size()) {
+                                                // すべてのファイルのダウンロードが完了したら停止しているスレッドを再開
+                                                synchronized (FileDownloadThread.this) {
+                                                    FileDownloadThread.this.notifyAll();
+                                                }
+                                                // カウンターをリセット
+                                                count = 0;
+                                            }
+                                        }
+                                    }
+                                });
+
+
                             }
                         }
                     })
@@ -180,6 +206,15 @@ public class ManagerActivity extends AppCompatActivity {
                             // エラー処理を書く
                         }
                     });
+        }
+
+        /** Firebaseからのファイルダウンロード完了まで待つ関数 */
+        synchronized private void waitFileDownload() {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         /** ダウンロードしたファイル一覧から名前のリストを作成する関数 */
@@ -199,7 +234,7 @@ public class ManagerActivity extends AppCompatActivity {
             };
             // ファイル一覧を取得する
             File downloadDir = new File(context.getFilesDir().getPath(), Constants.DOWNLOAD_PATH);
-            File[] list = downloadDir.listFiles();
+            File[] list = downloadDir.listFiles(filter);
 
             // 1ファイルずつ読み込む
             if (list != null) {

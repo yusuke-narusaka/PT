@@ -16,9 +16,9 @@ import android.os.Vibrator;
 
 public class GameActivityShake extends AppCompatActivity implements SensorEventListener {
     //変数宣言
-    private static final int LOWEST_SPEED = 10;  //1カウントに必要な端末の最低速度
+    private static final int LOWEST_SPEED = 3000;  //1カウントに必要な端末の最低速度
     private static final int SHAKE_TIMEOUT = 1000;    //端末が最低速度で振られるまでの時間
-    private static final int SHAKE_COUNT = 5; //端末が振るのに必要なカウント数
+    private static final int SHAKE_COUNT = 10; //端末が振るのに必要なカウント数
     private int shakeCount = 0;  //端末が振られたカウント数
     private long lastTimeDetectAcceleration = 0;    //一番最後に端末が最低速度以上の速度で振られた時間
     private float xDimen = 0;  //端末が一番最後に振られたときのX座標の位置
